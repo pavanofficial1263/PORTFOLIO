@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>M Pavan Raj — Game QA · Unity · Web | Portfolio</title>
+<meta name="description" content="M Pavan Raj — BCA Game Development graduate from Bengaluru. Game testing, Unity development and web technologies. Open to Game QA, development/design, technical support, IT and analytical roles.">
+<meta name="theme-color" content="#04050d">
+<meta property="og:title" content="M Pavan Raj — Game QA · Unity · Web">
+<meta property="og:description" content="BCA Game Development graduate with hands-on game testing, Unity and web experience. See my game projects and experience.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="assets/pavan-portrait.webp">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%2304050d'/%3E%3Cpath d='M14 20l14 12-14 12' fill='none' stroke='%2300e5ff' stroke-width='6' stroke-linecap='square'/%3E%3Cpath d='M34 46h18' stroke='%23ff46d4' stroke-width='6'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add('js')</script>
+<style>
+:root{
+  --bg:#04050d; --bg2:#080a18; --panel:#080b19;
+  --cyan:#00e5ff; --fuchsia:#ff46d4; --violet:#8b5cff; --green:#22e58a;
+  --ink:#e8f7fa; --mut:#a1b1c6; --dim:#66768d;
+  --line:rgba(0,229,255,.22);
+  --f-d:'Orbitron','Eurostile','Bank Gothic',ui-sans-serif,system-ui,sans-serif;
+  --f-b:'Chakra Petch','Segoe UI',system-ui,-apple-system,sans-serif;
+  --wrap:1240px; --pad:clamp(20px,4.6vw,64px);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--mut);font:400 1.05rem/1.7 var(--f-b);overflow-x:hidden;
+  background-image:radial-gradient(1100px 600px at 82% -8%,rgba(139,92,255,.16),transparent 60%),radial-gradient(900px 560px at -6% 38%,rgba(0,229,255,.08),transparent 60%),radial-gradient(900px 600px at 100% 88%,rgba(255,70,212,.09),transparent 60%);
+  background-attachment:fixed}
+body.menu-open{overflow:hidden}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+ul{list-style:none;margin:0;padding:0}
+h1,h2,h3,h4,p{margin:0}
+::selection{background:var(--fuchsia);color:#fff}
+:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+.skip{position:fixed;left:12px;top:-60px;z-index:200;background:var(--cyan);color:#001318;padding:.6rem 1rem;font-weight:700}
+.skip:focus{top:12px}
+.ic{width:1.15em;height:1.15em;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.wrap{width:min(100%,var(--wrap));margin-inline:auto;padding-inline:var(--pad)}
+
+/* ---------- background layers ---------- */
+#bg{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;pointer-events:none;display:block}
+.fx-floor{position:fixed;left:-40%;right:-40%;bottom:0;height:46vh;z-index:0;pointer-events:none;
+  background:linear-gradient(90deg,rgba(139,92,255,.42) 1px,transparent 1px) 0 0/72px 72px,linear-gradient(0deg,rgba(0,229,255,.3) 1px,transparent 1px) 0 0/72px 72px;
+  transform:perspective(420px) rotateX(64deg);transform-origin:50% 100%;
+  -webkit-mask-image:linear-gradient(to top,#000 10%,transparent 92%);mask-image:linear-gradient(to top,#000 10%,transparent 92%);animation:floorRun 3s linear infinite}
+@keyframes floorRun{to{background-position:0 0,0 72px}}
+.gl-on .fx-floor,.gl-on .fx-deco{display:none}
+.fx-deco{position:absolute;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.fx-deco svg{position:absolute;fill:none;stroke-width:1.2;filter:drop-shadow(0 0 6px currentColor)}
+.fx-deco .d1{left:33%;top:26%;width:150px;color:var(--cyan);stroke:var(--cyan);animation:spin 40s linear infinite}
+.fx-deco .d2{left:49%;top:64%;width:96px;color:var(--violet);stroke:var(--violet);animation:spin 30s linear infinite reverse}
+@keyframes spin{to{transform:rotate(360deg)}}
+.scan{position:fixed;inset:0;z-index:90;pointer-events:none;
+  background:repeating-linear-gradient(0deg,rgba(0,0,0,.3) 0,rgba(0,0,0,.3) 1px,transparent 1px,transparent 4px);opacity:.25;mix-blend-mode:multiply}
+.vignette{position:fixed;inset:0;z-index:89;pointer-events:none;background:radial-gradient(ellipse at 50% 40%,transparent 55%,rgba(0,0,0,.55) 100%)}
+#progress{position:fixed;left:0;top:0;height:2px;width:100%;z-index:120;background:linear-gradient(90deg,var(--cyan),var(--violet),var(--fuchsia));transform-origin:0 50%;transform:scaleX(0);box-shadow:0 0 12px var(--cyan)}
+main,footer{position:relative;z-index:2}
+
+/* ---------- nav ---------- */
+.nav{position:fixed;inset:0 0 auto 0;z-index:100;height:72px;display:flex;align-items:center;transition:background .3s,backdrop-filter .3s,border-color .3s;border-bottom:1px solid rgba(0,229,255,.1)}
+.nav.solid{background:rgba(4,5,13,.78);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom-color:var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:1.5rem}
+.brand{display:flex;align-items:center;gap:.8rem;font:700 1rem/1 var(--f-d);letter-spacing:.14em;color:var(--ink)}
+.brand b{color:var(--cyan);font-weight:700}
+.logo{width:40px;height:40px;display:grid;place-items:center;color:var(--cyan);border:1px solid rgba(0,229,255,.5);background:rgba(0,229,255,.08);
+  clip-path:polygon(0 0,calc(100% - 9px) 0,100% 9px,100% 100%,9px 100%,0 calc(100% - 9px))}
+.links{display:flex;gap:clamp(1rem,2.6vw,2.4rem)}
+.links a{font:500 .74rem/1 var(--f-d);letter-spacing:.22em;text-transform:uppercase;color:var(--mut);padding:.6rem 0;position:relative;transition:color .2s}
+.links a::before{content:"/ ";color:var(--cyan);opacity:.7}
+.links a::after{content:"";position:absolute;left:0;right:0;bottom:2px;height:1px;background:var(--cyan);box-shadow:0 0 8px var(--cyan);transform:scaleX(0);transform-origin:0 50%;transition:transform .3s}
+.links a:hover,.links a.on{color:var(--ink)}
+.links a:hover::after,.links a.on::after{transform:scaleX(1)}
+.btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:.7rem;padding:1rem 1.7rem;border:0;cursor:pointer;
+  font:700 .76rem/1 var(--f-d);letter-spacing:.2em;text-transform:uppercase;transition:transform .2s,filter .2s,color .2s;
+  clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,12px 100%,0 calc(100% - 12px))}
+.btn.solid{background:var(--cyan);color:#001318}
+.btn.solid:hover{filter:drop-shadow(0 0 14px rgba(0,229,255,.9)) brightness(1.08);transform:translateY(-2px)}
+.btn.ghost{z-index:0;background:linear-gradient(135deg,rgba(0,229,255,.75),rgba(139,92,255,.75) 60%,rgba(255,70,212,.75));color:var(--cyan)}
+.btn.ghost::before{content:"";position:absolute;inset:1px;z-index:-1;background:#07101b;
+  clip-path:polygon(0 0,calc(100% - 11.5px) 0,100% 11.5px,100% 100%,11.5px 100%,0 calc(100% - 11.5px));transition:background .2s}
+.btn.ghost:hover{color:#fff;transform:translateY(-2px)}
+.btn.ghost:hover::before{background:#0b1a2b}
+.btn.sm{padding:.85rem 1.3rem;font-size:.68rem}
+.burger{display:none;width:46px;height:46px;border:1px solid rgba(0,229,255,.45);background:rgba(0,229,255,.07);color:var(--cyan);cursor:pointer;position:relative;
+  clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px))}
+.burger i{position:absolute;left:12px;right:12px;height:2px;background:currentColor;transition:transform .35s,opacity .2s,top .35s}
+.burger i:nth-child(1){top:16px}.burger i:nth-child(2){top:22px}.burger i:nth-child(3){top:28px}
+.menu-open .nav{background:transparent;-webkit-backdrop-filter:none;backdrop-filter:none;border-color:transparent}
+.menu-open .burger i:nth-child(1){top:22px;transform:rotate(45deg)}
+.menu-open .burger i:nth-child(2){opacity:0}
+.menu-open .burger i:nth-child(3){top:22px;transform:rotate(-45deg)}
+
+/* staggered mobile menu */
+.mnav{position:fixed;inset:0;z-index:85;visibility:hidden;transition:visibility 0s .75s}
+.menu-open .mnav{visibility:visible;transition-delay:0s}
+.mnav .pl{position:absolute;inset:0;transform:translateX(101%);transition:transform .55s cubic-bezier(.7,0,.2,1)}
+.mnav .p1{background:var(--violet);transition-delay:.14s}.mnav .p2{background:var(--fuchsia);transition-delay:.07s}
+.mnav .p3{background:#060815;transition-delay:0s;padding:110px var(--pad) 40px;display:flex;flex-direction:column;justify-content:space-between}
+.menu-open .mnav .pl{transform:none}
+.menu-open .mnav .p1{transition-delay:0s}.menu-open .mnav .p2{transition-delay:.07s}.menu-open .mnav .p3{transition-delay:.14s}
+.mnav ul{display:grid;gap:.4rem}
+.mnav li a{display:block;font:800 clamp(2rem,9vw,3.2rem)/1.15 var(--f-d);letter-spacing:.04em;text-transform:uppercase;color:var(--ink);opacity:0;transform:translateX(50px);transition:opacity .4s,transform .5s cubic-bezier(.2,.8,.2,1),color .2s}
+.mnav li a span{color:var(--cyan);font-size:.9rem;font-weight:500;vertical-align:top;margin-right:.6rem}
+.menu-open .mnav li a{opacity:1;transform:none;transition-delay:calc(.42s + var(--i)*.07s)}
+.mnav li a:hover{color:var(--cyan)}
+.mnav small{font:500 .78rem/1.6 var(--f-d);letter-spacing:.14em;color:var(--dim);text-transform:uppercase;opacity:0;transition:opacity .4s .9s}
+.menu-open .mnav small{opacity:1}
+
+/* ---------- shared ---------- */
+section{position:relative;scroll-margin-top:60px}
+.sec{padding:clamp(64px,9vw,120px) 0}
+.eyebrow{display:block;font:600 .78rem/1 var(--f-d);letter-spacing:.24em;text-transform:uppercase;color:var(--fuchsia);margin-bottom:1rem;text-shadow:0 0 12px rgba(255,70,212,.5)}
+.h2{font:800 clamp(2.2rem,5.4vw,3.7rem)/1.05 var(--f-d);letter-spacing:.02em;text-transform:uppercase;color:var(--ink);text-shadow:0 0 22px rgba(0,229,255,.22)}
+.h2 em{font-style:normal;color:var(--fuchsia);text-shadow:0 0 22px rgba(255,70,212,.7)}
+.sec-head{margin-bottom:clamp(36px,5vw,64px)}
+.sec-head p{margin-top:1.1rem}
+.hl{color:var(--cyan)}.wh{color:#fff;font-weight:600}
+.frame{position:relative;padding:1px;background:linear-gradient(135deg,var(--cyan),var(--violet) 55%,var(--fuchsia));
+  clip-path:polygon(0 0,calc(100% - var(--cut,16px)) 0,100% var(--cut,16px),100% 100%,var(--cut,16px) 100%,0 calc(100% - var(--cut,16px)))}
+.frame>.in{background:var(--panel);height:100%;
+  clip-path:polygon(0 0,calc(100% - var(--cut,16px) + .5px) 0,100% calc(var(--cut,16px) - .5px),100% 100%,calc(var(--cut,16px) - .5px) 100%,0 calc(100% - var(--cut,16px) + .5px))}
+.chip{display:inline-flex;align-items:center;gap:.5rem;padding:.5rem .85rem;font:600 .68rem/1 var(--f-d);letter-spacing:.14em;text-transform:uppercase;color:var(--mut);border:1px solid rgba(0,229,255,.28);background:rgba(0,229,255,.05)}
+.chip.f{color:#ffb5ee;border-color:rgba(255,70,212,.5);background:rgba(255,70,212,.08)}
+.chip .ic{color:var(--cyan)}.chip.f .ic{color:var(--fuchsia)}
+.reveal{opacity:1}
+.js .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.2,.7,.2,1) calc(var(--d,0)*1ms),transform .7s cubic-bezier(.2,.7,.2,1) calc(var(--d,0)*1ms)}
+.js .reveal.vis{opacity:1;transform:none}
+
+/* tilt */
+[data-tilt]{transform:perspective(1100px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transform-style:preserve-3d;transition:transform .6s cubic-bezier(.2,.8,.2,1);will-change:transform}
+[data-tilt].tilting{transition:transform .08s linear}
+
+/* ---------- hero ---------- */
+.hero{min-height:100svh;display:flex;align-items:center;padding:110px 0 70px}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);gap:clamp(24px,5vw,80px);align-items:center;position:relative;z-index:2}
+.badge{display:inline-flex;align-items:center;gap:.7rem;padding:.6rem 1rem;border:1px solid rgba(0,229,255,.32);background:rgba(0,229,255,.06);font:600 .68rem/1 var(--f-d);letter-spacing:.16em;text-transform:uppercase;color:var(--ink)}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--green);box-shadow:0 0 0 0 rgba(34,229,138,.7);animation:ping 2s infinite;flex:none}
+@keyframes ping{70%{box-shadow:0 0 0 9px rgba(34,229,138,0)}100%{box-shadow:0 0 0 0 rgba(34,229,138,0)}}
+.name{margin:1.6rem 0 1.2rem;font:900 clamp(2.5rem,5.6vw + .6rem,5.9rem)/1 var(--f-d);white-space:nowrap;letter-spacing:.01em;text-transform:uppercase;color:#e4f2f5;position:relative}
+.name span{display:block}
+.name .r{color:var(--cyan);text-shadow:0 0 18px rgba(0,229,255,.75),0 0 60px rgba(0,229,255,.35)}
+.name:hover span{animation:glitch .45s steps(2) 1}
+@keyframes glitch{0%{text-shadow:3px 0 var(--fuchsia),-3px 0 var(--cyan);transform:translateX(0)}33%{transform:translateX(-3px)}66%{text-shadow:-3px 0 var(--fuchsia),3px 0 var(--cyan);transform:translateX(3px)}100%{transform:none}}
+.role{display:flex;align-items:center;min-height:1.6em;font:600 clamp(.95rem,1.7vw,1.2rem)/1.2 var(--f-d);letter-spacing:.3em;text-transform:uppercase;color:var(--cyan);text-shadow:0 0 14px rgba(0,229,255,.6)}
+.caret{display:inline-block;width:.6em;height:1.15em;margin-left:.3em;background:var(--cyan);box-shadow:0 0 10px var(--cyan);animation:blink 1s steps(2) infinite}
+@keyframes blink{50%{opacity:0}}
+.lead{max-width:56ch;margin:1.8rem 0 2.2rem;font-size:1.12rem;color:#9db0c4}
+.cta{display:flex;flex-wrap:wrap;gap:1rem}
+.seek{margin-top:2.4rem;font:500 .7rem/1.8 var(--f-d);letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+.portrait{position:relative;width:min(100%,500px);margin-inline:auto}
+.pglow{position:absolute;inset:6% 4%;background:conic-gradient(from 200deg,var(--cyan),var(--violet),var(--fuchsia),var(--cyan));filter:blur(46px);opacity:.34;transform:translateZ(-60px)}
+.portrait .frame{--cut:32px;aspect-ratio:.82}
+.portrait .in{position:relative;padding:0;background:#0a0c16;height:100%}
+.portrait img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 18%}
+.portrait .in::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,229,255,.08),transparent 30%,rgba(139,92,255,.16));mix-blend-mode:screen;pointer-events:none}
+.corner-sq{position:absolute;left:-1px;top:-1px;width:18px;height:18px;border:2px solid var(--fuchsia);box-shadow:0 0 10px var(--fuchsia);transform:translateZ(40px)}
+.tag{position:absolute;display:inline-flex;align-items:center;gap:.5rem;padding:.6rem .9rem;background:rgba(5,8,18,.88);border:1px solid rgba(0,229,255,.55);color:var(--ink);font:700 .66rem/1 var(--f-d);letter-spacing:.16em;text-transform:uppercase;box-shadow:0 0 18px rgba(0,229,255,.28);animation:bob 5s ease-in-out infinite}
+.tag .ic{color:var(--cyan)}
+.tag.t1{left:-6%;top:15%;transform:translateZ(70px)}
+.tag.t2{right:-5%;top:46%;transform:translateZ(90px);animation-delay:-1.6s}
+.tag.t3{left:-2%;bottom:6%;transform:translateZ(60px);animation-delay:-3s}
+@keyframes bob{50%{margin-top:-8px}}
+.idtag{position:absolute;right:0;bottom:-34px;font:500 .64rem/1 var(--f-d);letter-spacing:.2em;color:var(--dim)}
+.fadein{animation:fadeIn 1s ease .5s both}
+@keyframes fadeIn{from{opacity:0}}
+.hero-in>*{animation:rise .8s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--i,0)*90ms + 120ms)}
+@keyframes rise{from{opacity:0;transform:translateY(22px)}}
+
+/* ---------- about ---------- */
+.about .wrap{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(30px,6vw,90px);align-items:center}
+.about p+p{margin-top:1.3rem}
+.about .copy p{font-size:1.14rem;max-width:58ch}
+.soft-t{margin:2.4rem 0 1rem;font:500 .74rem/1 var(--f-d);letter-spacing:.24em;text-transform:uppercase;color:var(--dim)}
+.chips{display:flex;flex-wrap:wrap;gap:.7rem}
+.holo{width:min(100%,470px);margin-inline:auto}
+.holo .frame{--cut:22px;background:linear-gradient(135deg,rgba(0,229,255,.55),rgba(139,92,255,.35) 60%,rgba(255,70,212,.4))}
+.holo .in{position:relative;padding:22px 24px 20px;
+  background:radial-gradient(circle at 50% 44%,rgba(0,229,255,.2),transparent 56%),linear-gradient(rgba(0,229,255,.06) 1px,transparent 1px) 0 0/28px 28px,linear-gradient(90deg,rgba(0,229,255,.06) 1px,transparent 1px) 0 0/28px 28px,#070c18}
+.holo-head{display:flex;justify-content:space-between;align-items:center;font:600 .7rem/1 var(--f-d);letter-spacing:.2em;text-transform:uppercase}
+.holo-head b{color:var(--cyan);font-weight:700;text-shadow:0 0 10px rgba(0,229,255,.7)}
+.live{display:inline-flex;align-items:center;gap:.5rem;color:var(--dim);font-weight:500;letter-spacing:.14em}
+.live i{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);animation:blink 1.6s steps(2) infinite}
+.holo-sq{display:block;width:16px;height:16px;border:1.5px solid var(--fuchsia);margin-top:16px;box-shadow:0 0 8px rgba(255,70,212,.7)}
+.stage{position:relative;height:clamp(300px,34vw,360px);margin:-6px 0 8px;display:flex;justify-content:center;overflow:hidden}
+.stage img{height:100%;width:auto;max-width:100%;flex:none;object-fit:contain;transform:translate(calc(var(--tx,0)*12px),calc(var(--ty,0)*9px));transition:transform .4s ease-out}
+.stage img.orig{filter:drop-shadow(0 0 3px rgba(0,229,255,.9)) drop-shadow(0 0 16px rgba(0,229,255,.45)) contrast(1.05) saturate(1.05)}
+.sweep{position:absolute;left:8%;right:8%;top:0;height:2px;background:linear-gradient(90deg,transparent,var(--cyan),transparent);box-shadow:0 0 16px var(--cyan);animation:sweep 4.6s ease-in-out infinite;pointer-events:none}
+@keyframes sweep{0%{top:4%;opacity:0}12%{opacity:.9}88%{opacity:.9}100%{top:96%;opacity:0}}
+.holo-foot{padding-top:14px;border-top:1px solid rgba(0,229,255,.16);text-align:center;font:500 .6rem/1.6 var(--f-d);letter-spacing:.18em;color:var(--dim);text-transform:uppercase}
+
+/* ---------- skills + education ---------- */
+.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+.skill{--cut:18px}
+.skill .in{padding:26px 24px 28px;transition:background .3s}
+.skill:hover .in{background:#0a1022}
+.skill h3{display:flex;align-items:center;gap:.7rem;font:700 .82rem/1.3 var(--f-d);letter-spacing:.16em;text-transform:uppercase;color:var(--ink);margin-bottom:1.3rem}
+.skill h3 .ic{color:var(--cyan);width:1.5em;height:1.5em;filter:drop-shadow(0 0 6px var(--cyan))}
+.skill li{display:flex;align-items:center;gap:.7rem;padding:.55rem 0;border-top:1px solid rgba(0,229,255,.1);color:var(--mut);font-weight:500}
+.skill li::before{content:"";width:6px;height:6px;background:var(--fuchsia);box-shadow:0 0 8px var(--fuchsia);transform:rotate(45deg);flex:none}
+.sub-h{margin:clamp(56px,7vw,96px) 0 28px;font:700 1.15rem/1 var(--f-d);letter-spacing:.2em;text-transform:uppercase;color:var(--ink);display:flex;align-items:center;gap:1rem}
+.sub-h::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(0,229,255,.45),transparent)}
+.sub-h small{white-space:nowrap;font:600 .72rem/1 var(--f-d);letter-spacing:.24em;color:var(--fuchsia)}
+.edu{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.edu .in{padding:30px 30px 32px;display:grid;gap:.5rem}
+.yr{font:800 1.9rem/1 var(--f-d);color:var(--cyan);text-shadow:0 0 18px rgba(0,229,255,.55);letter-spacing:.04em}
+.edu h3{font:700 1.15rem/1.35 var(--f-d);letter-spacing:.05em;color:var(--ink);text-transform:uppercase;margin-top:.6rem}
+.edu p{color:var(--mut)}
+.edu .lvl{font:600 .68rem/1 var(--f-d);letter-spacing:.2em;color:var(--fuchsia);text-transform:uppercase}
+
+/* ---------- projects ---------- */
+.proj{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);gap:clamp(30px,5.5vw,84px);align-items:center;padding:clamp(34px,5vw,64px) 0}
+.proj+.proj{border-top:1px solid rgba(0,229,255,.1)}
+.proj:nth-of-type(even) .pm{order:2}
+.pm{display:grid;place-items:center;padding:0 0 6%}
+.stack{position:relative;width:min(100%,var(--w,660px))}
+.stack::before{content:"";position:absolute;inset:8%;background:conic-gradient(from 120deg,var(--cyan),var(--violet),var(--fuchsia),var(--cyan));filter:blur(50px);opacity:.28;transform:translateZ(-50px)}
+.shot{--cut:20px;position:relative;margin:0;display:block}
+.shot .in{padding:0;line-height:0;background:#050610}
+.shot img{width:100%;height:auto}
+.shot figcaption{position:absolute;left:0;top:0;z-index:2;padding:.5rem .8rem;font:700 .6rem/1 var(--f-d);letter-spacing:.2em;text-transform:uppercase;color:#001318;background:var(--cyan)}
+.shot.sub figcaption{background:var(--fuchsia);color:#1a0016}
+.shot.sub{--cut:14px;position:absolute;right:-6%;bottom:-9%;width:var(--sw,44%);transform:translateZ(80px)}
+.shot.main{transform:translateZ(0)}
+.pi .kick{font:600 .72rem/1 var(--f-d);letter-spacing:.22em;text-transform:uppercase;color:var(--fuchsia);margin-bottom:.9rem;display:block}
+.pi h3{font:800 clamp(1.9rem,3.6vw,2.7rem)/1.08 var(--f-d);letter-spacing:.03em;text-transform:uppercase;color:var(--ink);text-shadow:0 0 20px rgba(0,229,255,.25)}
+.pi .desc{margin:1.2rem 0 1.5rem;max-width:52ch}
+.pi h4{font:600 .7rem/1 var(--f-d);letter-spacing:.22em;text-transform:uppercase;color:var(--cyan);margin-bottom:.8rem}
+.bul{display:grid;gap:.5rem;margin-bottom:1.6rem}
+.bul li{display:flex;gap:.75rem;align-items:flex-start;font-weight:500;color:#b7c5d6}
+.bul li .ic{color:var(--cyan);margin-top:.28em;width:1em;height:1em}
+.note{margin-top:1.2rem;font-size:.9rem;color:var(--dim);border-left:2px solid rgba(255,70,212,.6);padding-left:.9rem}
+.more{margin-top:clamp(30px,4vw,50px);display:flex;justify-content:center}
+
+/* ---------- experience ---------- */
+.tl{--P:clamp(24px,4.2vw,56px);position:relative;margin-left:8px;padding-left:var(--P);border-left:1px solid rgba(0,229,255,.32)}
+.tl-item{position:relative;padding-bottom:34px}
+.tl-item:last-child{padding-bottom:0}
+.tl-node{position:absolute;left:calc(var(--P)*-1 - 6.5px);top:32px;width:12px;height:12px;background:var(--cyan);transform:rotate(45deg);box-shadow:0 0 16px var(--cyan),0 0 0 5px rgba(0,229,255,.14)}
+.tl-item:nth-child(2) .tl-node{background:var(--fuchsia);box-shadow:0 0 16px var(--fuchsia),0 0 0 5px rgba(255,70,212,.14)}
+.job .in{padding:clamp(24px,3.4vw,40px)}
+.job-top{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.8rem 1.5rem;align-items:flex-start}
+.job h3{font:800 clamp(1.25rem,2.4vw,1.7rem)/1.2 var(--f-d);letter-spacing:.04em;text-transform:uppercase;color:var(--ink)}
+.job h3 small{display:block;margin-top:.4rem;font:600 .7rem/1 var(--f-d);letter-spacing:.2em;color:var(--fuchsia)}
+.org{margin-top:.7rem;color:#c3d3e3;font-weight:500}
+.org span{color:var(--dim)}
+.dur{white-space:nowrap}
+.job-cols{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(24px,4vw,56px);margin-top:1.8rem}
+.job h4{font:600 .7rem/1 var(--f-d);letter-spacing:.22em;text-transform:uppercase;color:var(--cyan);margin-bottom:1rem}
+.metric{display:flex;align-items:center;gap:1rem;margin-top:1.5rem;padding:1rem 1.2rem;border:1px solid rgba(34,229,138,.4);background:rgba(34,229,138,.06)}
+.metric b{font:800 2rem/1 var(--f-d);color:var(--green);text-shadow:0 0 16px rgba(34,229,138,.6)}
+.metric span{font-weight:500;color:#c8dcd2;line-height:1.4}
+.tools{display:grid;gap:.7rem}
+.tools li{display:grid;grid-template-columns:112px 1fr;gap:.2rem 1rem;align-items:baseline;padding:.65rem 0;border-top:1px solid rgba(0,229,255,.12)}
+.tools b{font:700 .8rem/1 var(--f-d);letter-spacing:.12em;color:var(--ink);text-transform:uppercase}
+.tools span{color:var(--mut);font-size:.96rem}
+.nda{display:inline-flex;align-items:center;gap:.5rem;margin-top:1rem}
+
+/* ---------- contact ---------- */
+.contact .frame{--cut:30px}
+.contact .in{padding:clamp(28px,5vw,64px);display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(24px,4vw,64px);align-items:center;
+  background:radial-gradient(700px 400px at 100% 50%,rgba(139,92,255,.16),transparent 65%),radial-gradient(500px 300px at 0% 0%,rgba(0,229,255,.1),transparent 70%),var(--panel)}
+.contact .lead2{margin:1.3rem 0 2rem;max-width:50ch}
+.acts{display:flex;flex-wrap:wrap;gap:1rem}
+.links3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:1.8rem}
+.lk{display:grid;align-content:start;gap:.45rem;padding:1rem 1.1rem;border:1px solid rgba(0,229,255,.26);background:rgba(0,229,255,.04);transition:border-color .25s,background .25s,transform .25s;min-width:0}
+.lk:hover{border-color:var(--cyan);background:rgba(0,229,255,.1);transform:translateY(-3px);box-shadow:0 0 22px rgba(0,229,255,.18)}
+.lk .ic{color:var(--cyan);width:1.4em;height:1.4em}
+.lk b{font:700 .68rem/1 var(--f-d);letter-spacing:.2em;text-transform:uppercase;color:var(--ink)}
+.lk span{font-size:.86rem;color:var(--mut);overflow-wrap:anywhere;line-height:1.35}
+.cube-wrap{display:grid;place-items:center;min-height:320px}
+.cube-stage{width:230px;height:230px;perspective:900px;cursor:grab;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.cube-stage:active{cursor:grabbing}
+.cube{position:relative;width:100%;height:100%;transform-style:preserve-3d;transform:rotateX(-22deg) rotateY(30deg)}
+.face{position:absolute;inset:0;display:grid;place-content:center;justify-items:center;gap:.6rem;border:1.5px solid var(--cyan);background:linear-gradient(135deg,rgba(0,229,255,.14),rgba(139,92,255,.16));box-shadow:inset 0 0 34px rgba(0,229,255,.28),0 0 22px rgba(0,229,255,.22);color:var(--ink);font:700 .72rem/1 var(--f-d);letter-spacing:.24em;text-transform:uppercase}
+.face .ic{width:2.6em;height:2.6em;color:var(--cyan);filter:drop-shadow(0 0 8px var(--cyan))}
+.face:nth-child(2n){border-color:var(--fuchsia);box-shadow:inset 0 0 34px rgba(255,70,212,.26),0 0 22px rgba(255,70,212,.2)}
+.face:nth-child(2n) .ic{color:var(--fuchsia);filter:drop-shadow(0 0 8px var(--fuchsia))}
+.f1{transform:translateZ(115px)}.f2{transform:rotateY(180deg) translateZ(115px)}.f3{transform:rotateY(90deg) translateZ(115px)}
+.f4{transform:rotateY(-90deg) translateZ(115px)}.f5{transform:rotateX(90deg) translateZ(115px)}.f6{transform:rotateX(-90deg) translateZ(115px)}
+.cube-hint{margin-top:64px;font:500 .64rem/1 var(--f-d);letter-spacing:.24em;color:var(--dim);text-transform:uppercase;text-align:center}
+footer{padding:34px 0 46px;border-top:1px solid rgba(0,229,255,.12);background:rgba(4,5,13,.6)}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;font:500 .7rem/1.6 var(--f-d);letter-spacing:.18em;color:var(--dim);text-transform:uppercase}
+footer a:hover{color:var(--cyan)}
+.toast{position:fixed;left:50%;bottom:28px;z-index:150;transform:translate(-50%,30px);opacity:0;pointer-events:none;display:flex;align-items:center;gap:.7rem;padding:.9rem 1.3rem;background:#06131a;border:1px solid var(--green);color:#d6ffe9;font:600 .74rem/1 var(--f-d);letter-spacing:.14em;text-transform:uppercase;box-shadow:0 0 26px rgba(34,229,138,.3);transition:opacity .3s,transform .4s cubic-bezier(.2,.8,.2,1)}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.toast .ic{color:var(--green)}
+
+/* ---------- responsive ---------- */
+@media (max-width:1100px){.grid4{grid-template-columns:repeat(2,minmax(0,1fr))}.links3{grid-template-columns:1fr}}
+@media (max-width:900px){
+  .links,.nav .btn{display:none}.burger{display:block}
+  .hero .wrap,.about .wrap,.proj,.contact .in,.job-cols{grid-template-columns:1fr}
+  .hero{padding-top:100px}
+  .portrait{width:min(86%,420px);margin-top:20px}
+  .proj:nth-of-type(even) .pm{order:0}
+  .pm{padding-bottom:9%}
+  .edu{grid-template-columns:1fr}
+  .about .holo{order:2}
+  .links3{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .fx-deco .d1{left:60%;top:8%}
+}
+@media (max-width:600px){
+  .grid4,.links3{grid-template-columns:1fr}
+  .tag.t1{left:-3%}.tag.t2{right:-3%}
+  .shot.sub{right:0;bottom:-7%}
+  .tools li{grid-template-columns:1fr;gap:.35rem}
+  .sub-h{flex-wrap:wrap;gap:.6rem 1rem;font-size:.95rem}
+  .role{letter-spacing:.18em}
+  .name{font-size:min(3.4rem,14vw)}
+  .badge{font-size:.6rem;letter-spacing:.1em}
+  .dur{white-space:normal}
+  .btn{padding:.95rem 1.3rem}
+  .cube-stage{width:190px;height:190px}
+  .f1{transform:translateZ(95px)}.f2{transform:rotateY(180deg) translateZ(95px)}.f3{transform:rotateY(90deg) translateZ(95px)}
+  .f4{transform:rotateY(-90deg) translateZ(95px)}.f5{transform:rotateX(90deg) translateZ(95px)}.f6{transform:rotateX(-90deg) translateZ(95px)}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition-duration:.01ms!important;transition-delay:0s!important}
+  .js .reveal{opacity:1;transform:none}
+  .caret{animation:none}
+  [data-tilt]{transform:none!important}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#about">Skip to content</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
+  <symbol id="i-in" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></symbol>
+  <symbol id="i-git" viewBox="0 0 24 24"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></symbol>
+  <symbol id="i-game" viewBox="0 0 24 24"><line x1="6" x2="10" y1="11" y2="11"/><line x1="8" x2="8" y1="9" y2="13"/><line x1="15" x2="15.01" y1="12" y2="12"/><line x1="18" x2="18.01" y1="10" y2="10"/><path d="M17.32 5H6.68a4 4 0 0 0-3.98 3.59C2.6 9.42 2 14.46 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.41-1.41A2 2 0 0 1 9.83 16h4.34a2 2 0 0 1 1.41.59L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.55-.6-6.58-.68-7.26A4 4 0 0 0 17.32 5z"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0l1.58 6.14a2 2 0 0 0 1.44 1.44l6.14 1.58a.5.5 0 0 1 0 .96l-6.14 1.58a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="m18 15-6-6-6 6"/></symbol>
+</svg>
+
+<div id="progress" aria-hidden="true"></div>
+<canvas id="bg" aria-hidden="true"></canvas>
+<div class="fx-floor" aria-hidden="true"></div>
+<div class="vignette" aria-hidden="true"></div>
+<div class="scan" aria-hidden="true"></div>
+
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Pavan Raj — back to top">
+      <span class="logo"><svg class="ic" viewBox="0 0 24 24" style="stroke-width:2.2"><path d="m5 7 6 5-6 5"/><path d="M13 18h6"/></svg></span>
+      <span>PAVAN<b>.RAJ</b></span>
+    </a>
+    <nav class="links" aria-label="Primary">
+      <a href="#about">About</a><a href="#skills">Skills</a><a href="#projects">Projects</a><a href="#experience">Experience</a><a href="#contact">Contact</a>
+    </nav>
+    <a class="btn solid sm" href="#contact">Hire me</a>
+    <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="mnav"><i></i><i></i><i></i></button>
+  </div>
+</header>
+
+<div class="mnav" id="mnav" aria-hidden="true">
+  <div class="pl p1"></div><div class="pl p2"></div>
+  <div class="pl p3">
+    <ul>
+      <li><a href="#about" style="--i:0"><span>01</span>About</a></li>
+      <li><a href="#skills" style="--i:1"><span>02</span>Skills</a></li>
+      <li><a href="#projects" style="--i:2"><span>03</span>Projects</a></li>
+      <li><a href="#experience" style="--i:3"><span>04</span>Experience</a></li>
+      <li><a href="#contact" style="--i:4"><span>05</span>Contact</a></li>
+    </ul>
+    <small>Bengaluru, India · pavanofficial1263@gmail.com</small>
+  </div>
+</div>
+
+<main id="top">
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="hero">
+  <div class="fx-deco" aria-hidden="true">
+    <svg class="d1" viewBox="0 0 100 100"><polygon points="50,4 91,27 91,73 50,96 9,73 9,27"/><path d="M50 4v46l41 23M50 50 9 73M9 27l41 23 41-23"/></svg>
+    <svg class="d2" viewBox="0 0 100 100"><polygon points="50,4 96,50 50,96 4,50"/><path d="M4 50h92M50 4v92"/></svg>
+  </div>
+  <div class="wrap">
+    <div class="hero-in">
+      <span class="badge" style="--i:0"><i class="dot"></i>Open to work · Bengaluru, Karnataka, India</span>
+      <h1 class="name" style="--i:1" aria-label="M Pavan Raj"><span>M Pavan</span><span class="r">Raj</span></h1>
+      <div class="role" style="--i:2" role="img" aria-label="Problem Solver, Game QA Tester, Unity Developer, Game Designer, Web Developer"><span id="role" aria-hidden="true">Problem Solver</span><i class="caret" aria-hidden="true"></i></div>
+      <p class="lead" style="--i:3">BCA Game Development graduate combining hands-on game testing, Unity development and web technologies — with a strong eye for detail, systematic problem-solving and a passion for playable experiences.</p>
+      <div class="cta" style="--i:4">
+        <a class="btn solid" href="#projects">View projects</a>
+        <a class="btn ghost" href="#contact">Get in touch</a>
+      </div>
+      <p class="seek" style="--i:5">Seeking: Game QA · Development/Design · Technical Support · IT · Analytical roles</p>
+    </div>
+
+    <div class="portrait fadein" data-tilt="7">
+      <div class="pglow"></div>
+      <div class="frame"><div class="in">
+        <img src="assets/pavan-portrait.webp" width="1000" height="1000" alt="Portrait of M Pavan Raj in a black blazer and shirt" fetchpriority="high" decoding="async">
+      </div></div>
+      <span class="corner-sq"></span>
+      <span class="tag t1"><svg class="ic"><use href="#i-game"/></svg>Unity dev</span>
+      <span class="tag t2"><svg class="ic"><use href="#i-shield"/></svg>Game QA</span>
+      <span class="tag t3"><svg class="ic"><use href="#i-spark"/></svg>Game design</span>
+      <span class="idtag">ID: PAVAN_RAJ · V2026</span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ABOUT ================= -->
+<section class="about sec" id="about">
+  <div class="wrap">
+    <div class="copy">
+      <span class="eyebrow reveal">// Player profile</span>
+      <h2 class="h2 reveal" style="--d:60">About <em>me</em></h2>
+      <div style="margin-top:1.8rem">
+        <p class="reveal" style="--d:120">I’m a <span class="hl">BCA Game Development graduate</span> with hands-on experience in Game Testing and Web Technologies, combining technical skills with a strong eye for detail and problem-solving. I’ve worked with <span class="wh">C++, C#, MySQL, Unity, Unreal Engine, Excel, Jira and Helix</span>, along with professional QA tools and workflows.</p>
+        <p class="reveal" style="--d:180">I’m actively looking for opportunities in <span class="hl">Game QA, Development/Design, Technical Support, IT, Analytical</span> and other technology-driven roles, where I can learn, contribute, and grow.</p>
+      </div>
+      <p class="soft-t reveal" style="--d:220">Soft skills</p>
+      <ul class="chips reveal" style="--d:260">
+        <li class="chip f"><svg class="ic"><use href="#i-check"/></svg>Attention to detail</li>
+        <li class="chip f"><svg class="ic"><use href="#i-check"/></svg>Problem solving</li>
+        <li class="chip f"><svg class="ic"><use href="#i-check"/></svg>Analytical thinking</li>
+        <li class="chip f"><svg class="ic"><use href="#i-check"/></svg>Adaptability</li>
+        <li class="chip f"><svg class="ic"><use href="#i-check"/></svg>Communication</li>
+      </ul>
+    </div>
+
+    <div class="reveal" style="--d:140">
+      <div class="holo" data-tilt="6">
+        <div class="frame"><div class="in">
+          <div class="holo-head"><b>HOLO-MODEL 001</b><span class="live"><i></i>Live render</span></div>
+          <span class="holo-sq"></span>
+          <div class="stage">
+            <img id="holoImg" src="assets/holo-model-001.webp" data-fallback="assets/face-model-original.webp" width="1160" height="1368" alt="Stylised holographic 3D model of Pavan’s face with glowing cyan contour lines" loading="lazy" decoding="async">
+            <span class="sweep"></span>
+          </div>
+          <div class="holo-foot">Face geometry · original ratios &amp; skin tone preserved</div>
+        </div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SKILLS + EDUCATION ================= -->
+<section class="sec" id="skills" style="padding-top:clamp(40px,6vw,80px)">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow reveal">// Loadout</span>
+      <h2 class="h2 reveal" style="--d:60">Technical <em>skills</em></h2>
+    </div>
+    <div class="grid4">
+      <article class="skill frame reveal" style="--d:0"><div class="in">
+        <h3><svg class="ic"><use href="#i-game"/></svg>Engines &amp; code</h3>
+        <ul><li>Unity</li><li>Unreal Engine</li><li>C++</li><li>C#</li><li>Visual Studio Code</li></ul>
+      </div></article>
+      <article class="skill frame reveal" style="--d:90"><div class="in">
+        <h3><svg class="ic"><use href="#i-spark"/></svg>Art &amp; design</h3>
+        <ul><li>Maya</li><li>Adobe Photoshop</li><li>Adobe Illustrator</li></ul>
+      </div></article>
+      <article class="skill frame reveal" style="--d:180"><div class="in">
+        <h3><svg class="ic"><use href="#i-chart"/></svg>Data &amp; web</h3>
+        <ul><li>MySQL</li><li>Microsoft Excel</li><li>Web technologies</li></ul>
+      </div></article>
+      <article class="skill frame reveal" style="--d:270"><div class="in">
+        <h3><svg class="ic"><use href="#i-shield"/></svg>QA workflow</h3>
+        <ul><li>Jira</li><li>Helix</li><li>Confluence</li><li>Slack</li></ul>
+      </div></article>
+    </div>
+
+    <h3 class="sub-h reveal"><small>// Training log</small>Academic journey</h3>
+    <div class="edu">
+      <article class="frame reveal" style="--cut:18px;--d:0"><div class="in">
+        <span class="lvl">Bachelor of Computer Application</span>
+        <span class="yr">2023 — 2026</span>
+        <h3>BCA in Game Development</h3>
+        <p>CMR University (Satellite Campus)</p>
+      </div></article>
+      <article class="frame reveal" style="--cut:18px;--d:100"><div class="in">
+        <span class="lvl">Higher Secondary</span>
+        <span class="yr">2021 — 2023</span>
+        <h3>Class XII · CEBA</h3>
+        <p>CMR National PU College</p>
+      </div></article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PROJECTS ================= -->
+<section class="sec" id="projects" style="padding-top:clamp(30px,5vw,60px)">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow reveal">// Mission select</span>
+      <h2 class="h2 reveal" style="--d:60">Game <em>projects</em></h2>
+    </div>
+
+    <!-- Cube Fall -->
+    <article class="proj" id="cube-fall">
+      <div class="pm reveal">
+        <div class="stack" data-tilt="8" style="--w:430px;--sw:44%">
+          <figure class="shot main frame"><div class="in">
+            <figcaption>Thumbnail</figcaption>
+            <img src="assets/cube-fall-thumbnail.webp" width="900" height="926" alt="Cube Fall thumbnail — a red cube falling toward a neon platform under a ceiling of spikes" loading="lazy" decoding="async">
+          </div></figure>
+          <figure class="shot sub frame"><div class="in">
+            <figcaption>Gameplay</figcaption>
+            <img src="assets/cube-fall-gameplay.webp" width="299" height="493" alt="Cube Fall gameplay — the red cube on a blue platform with spikes above and a spiked hazard below" loading="lazy" decoding="async">
+          </div></figure>
+        </div>
+      </div>
+      <div class="pi reveal" style="--d:100">
+        <span class="kick">2D arcade · Survival</span>
+        <h3>Cube Fall</h3>
+        <p class="desc">Cube Fall is a fast-paced 2D arcade game where the player controls a cube that continuously falls downward through an endless vertical path filled with obstacles. The main objective is to survive as long as possible by skillfully navigating the cube left and right while avoiding hazards.</p>
+        <h4>Objective</h4>
+        <ul class="bul">
+          <li><svg class="ic"><use href="#i-check"/></svg>Steer the cube left and right</li>
+          <li><svg class="ic"><use href="#i-check"/></svg>Dodge hazards on an endless vertical path</li>
+          <li><svg class="ic"><use href="#i-check"/></svg>Survive as long as possible</li>
+        </ul>
+        <ul class="chips"><li class="chip">2D</li><li class="chip">Arcade</li><li class="chip">Endless</li></ul>
+      </div>
+    </article>
+
+    <!-- Space Shooter -->
+    <article class="proj" id="space-shooter">
+      <div class="pm reveal">
+        <div class="stack" data-tilt="7" style="--w:680px">
+          <figure class="shot main frame"><div class="in">
+            <figcaption>Thumbnail</figcaption>
+            <img src="assets/space-shooter-thumbnail.webp" width="1400" height="933" alt="2D Space Shooter thumbnail — a blue fighter ship firing at magenta enemy ships above a glowing planet" loading="lazy" decoding="async">
+          </div></figure>
+        </div>
+      </div>
+      <div class="pi reveal" style="--d:100">
+        <span class="kick">2D arcade · Shooter</span>
+        <h3>2D Space Shooter</h3>
+        <p class="desc">Space Shooter is a classic 2D arcade-style game where the player controls a spaceship battling waves of enemies in outer space. The main objective is to destroy enemy ships, avoid incoming attacks, and survive as long as possible while achieving a high score.</p>
+        <h4>Objective</h4>
+        <ul class="bul">
+          <li><svg class="ic"><use href="#i-check"/></svg>Destroy waves of enemy ships</li>
+          <li><svg class="ic"><use href="#i-check"/></svg>Avoid incoming attacks</li>
+          <li><svg class="ic"><use href="#i-check"/></svg>Survive and chase a high score</li>
+        </ul>
+        <ul class="chips"><li class="chip">2D</li><li class="chip">Arcade</li><li class="chip">Shooter</li></ul>
+      </div>
+    </article>
+
+    <!-- Zombie Smasher -->
+    <article class="proj" id="zombie-smasher">
+      <div class="pm reveal">
+        <div class="stack" data-tilt="8" style="--w:660px;--sw:46%">
+          <figure class="shot main frame"><div class="in">
+            <figcaption>Thumbnail</figcaption>
+            <img src="assets/zombie-smasher-thumbnail.webp" width="1400" height="788" alt="Zombie Smasher: Endless Runner thumbnail — an armoured tank crushing zombies on a ruined highway at dusk" loading="lazy" decoding="async">
+          </div></figure>
+          <figure class="shot sub frame"><div class="in">
+            <figcaption>Gameplay</figcaption>
+            <img src="assets/zombie-smasher-gameplay.webp" width="886" height="502" alt="Zombie Smasher gameplay — a green tank driving down a desert road toward zombies, with health, energy and kill counter" loading="lazy" decoding="async">
+          </div></figure>
+        </div>
+      </div>
+      <div class="pi reveal" style="--d:100">
+        <span class="kick">Endless runner · Tank action</span>
+        <h3>Zombie Smasher</h3>
+        <p class="desc">Zombie Smasher is an endless runner game where the player controls a powerful tank moving through a zombie-infested environment. The main objective is to survive as long as possible, crush zombies for points, and avoid obstacles that damage the tank.</p>
+        <h4>Objective</h4>
+        <ul class="bul">
+          <li><svg class="ic"><use href="#i-check"/></svg>Crush zombies for points</li>
+          <li><svg class="ic"><use href="#i-check"/></svg>Avoid obstacles that damage the tank</li>
+          <li><svg class="ic"><use href="#i-check"/></svg>Survive as long as possible</li>
+        </ul>
+        <ul class="chips"><li class="chip">Endless runner</li><li class="chip">Action</li><li class="chip">Score-based</li></ul>
+      </div>
+    </article>
+
+    <!-- Treasure Quest -->
+    <article class="proj" id="treasure-quest">
+      <div class="pm reveal">
+        <div class="stack" data-tilt="7" style="--w:600px">
+          <figure class="shot main frame"><div class="in">
+            <figcaption>Portfolio preview</figcaption>
+            <img src="assets/treasure-quest.webp" width="1400" height="1050" alt="Treasure Quest board game portfolio preview — a pirate-themed board with a treasure map at its centre" loading="lazy" decoding="async">
+          </div></figure>
+        </div>
+      </div>
+      <div class="pi reveal" style="--d:100">
+        <span class="kick">Board game · Academic project</span>
+        <h3>Treasure Quest</h3>
+        <p class="desc">Designed and developed a treasure-hunt themed board game as part of my academic work. I created the overall game layout, board structure, visual arrangement, and gameplay concept using Adobe Photoshop, incorporating online visual assets to build the final presentation. Treasure Quest is a pirate-themed adventure board game set on a mysterious island filled with hidden riches, dangers, and strategic pathways. Players take on the role of treasure hunters navigating around the board’s outer path while aiming to discover and collect valuable treasures.</p>
+        <h4>My contribution</h4>
+        <ul class="bul">
+          <li><svg class="ic"><use href="#i-check"/></svg>Board layout and composition</li>
+          <li><svg class="ic"><use href="#i-check"/></svg>Treasure-hunt theme</li>
+          <li><svg class="ic"><use href="#i-check"/></svg>Game element arrangement</li>
+          <li><svg class="ic"><use href="#i-check"/></svg>Visual editing and presentation</li>
+          <li><svg class="ic"><use href="#i-check"/></svg>Overall game concept</li>
+        </ul>
+        <ul class="chips"><li class="chip">Board game</li><li class="chip">Adobe Photoshop</li></ul>
+        <p class="note">Some visual elements were sourced from online resources; the design and layout are original project work.</p>
+      </div>
+    </article>
+
+    <div class="more reveal">
+      <a class="btn ghost" href="https://github.com/pavanofficial1263" target="_blank" rel="noopener"><svg class="ic"><use href="#i-git"/></svg>More on GitHub</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= EXPERIENCE ================= -->
+<section class="sec" id="experience">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow reveal">// Quest log</span>
+      <h2 class="h2 reveal" style="--d:60">Work <em>experience</em></h2>
+    </div>
+    <div class="tl">
+      <div class="tl-item reveal">
+        <span class="tl-node"></span>
+        <article class="job frame" style="--cut:20px"><div class="in">
+          <div class="job-top">
+            <div>
+              <h3>Web Technologies <small>Intern</small></h3>
+              <p class="org">VM Technology &amp; Financial Services (VMTFS) <span>· Bengaluru, Karnataka, India</span></p>
+            </div>
+            <span class="chip dur">2 months · 60 days</span>
+          </div>
+          <div class="job-cols">
+            <div>
+              <h4>About the role</h4>
+              <ul class="bul" style="margin-bottom:0">
+                <li><svg class="ic"><use href="#i-check"/></svg>Designed and built a responsive front-end interface for portal previews on PC</li>
+                <li><svg class="ic"><use href="#i-check"/></svg>Ran usability sessions, iterating on visual layouts and navigation flows to raise user satisfaction</li>
+                <li><svg class="ic"><use href="#i-check"/></svg>Developed a back-end admin panel using C# and MySQL</li>
+                <li><svg class="ic"><use href="#i-check"/></svg>Applied systematic problem-solving to refactor loading routines</li>
+              </ul>
+            </div>
+            <div>
+              <h4>Result</h4>
+              <div class="metric" style="margin-top:0"><b>22%</b><span>reduction in initial load time for PC builds</span></div>
+            </div>
+          </div>
+        </div></article>
+      </div>
+
+      <div class="tl-item reveal" style="--d:80">
+        <span class="tl-node"></span>
+        <article class="job frame" style="--cut:20px"><div class="in">
+          <div class="job-top">
+            <div>
+              <h3>Trainee Game Tester <small>Game QA</small></h3>
+              <p class="org">Sun Technology Integrators Pvt. Ltd <span>· Bengaluru, Karnataka, India</span></p>
+              <span class="chip f nda"><svg class="ic"><use href="#i-shield"/></svg>Two game projects under NDA</span>
+            </div>
+            <span class="chip dur">4 months · 120 days</span>
+          </div>
+          <div class="job-cols">
+            <div>
+              <h4>Testing responsibilities</h4>
+              <ul class="chips" style="gap:.55rem">
+                <li class="chip">Gameplay testing</li><li class="chip">Functional testing</li><li class="chip">UI testing</li><li class="chip">Regression testing</li>
+                <li class="chip">Bug identification &amp; reproduction</li><li class="chip">Defect reporting</li><li class="chip">Fix verification</li><li class="chip">Team communication</li>
+              </ul>
+            </div>
+            <div>
+              <h4>Tools used</h4>
+              <ul class="tools">
+                <li><b>Jira</b><span>Bug tracking and issue management</span></li>
+                <li><b>Helix</b><span>Bug reporting and defect documentation</span></li>
+                <li><b>Confluence</b><span>Testing and project documentation</span></li>
+                <li><b>Slack</b><span>Team communication and coordination</span></li>
+                <li><b>Excel</b><span>Test case management, tracking and reporting</span></li>
+              </ul>
+            </div>
+          </div>
+        </div></article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section class="sec contact" id="contact" style="padding-bottom:clamp(60px,8vw,110px)">
+  <div class="wrap">
+    <div class="frame reveal"><div class="in">
+      <div>
+        <span class="eyebrow">// Open channel</span>
+        <h2 class="h2">Let’s <em>connect</em></h2>
+        <p class="lead2">Looking for a Game QA tester, Unity or web developer, or an analytical teammate? Send a message — I’m open to Game QA, development/design, technical support and IT roles.</p>
+        <div class="acts">
+          <button class="btn solid" id="copyMail" type="button" data-email="pavanofficial1263@gmail.com"><svg class="ic"><use href="#i-copy"/></svg>Copy email</button>
+          <a class="btn ghost" href="mailto:pavanofficial1263@gmail.com?subject=Hello%20Pavan"><svg class="ic"><use href="#i-mail"/></svg>Send mail</a>
+        </div>
+        <div class="links3">
+          <a class="lk" href="tel:+917975334611"><svg class="ic"><use href="#i-phone"/></svg><b>Call</b><span>+91 79753 34611</span></a>
+          <a class="lk" href="https://www.linkedin.com/in/m-pavan-raj-z2005" target="_blank" rel="noopener"><svg class="ic"><use href="#i-in"/></svg><b>LinkedIn</b><span>in/m-pavan-raj-z2005</span></a>
+          <a class="lk" href="https://github.com/pavanofficial1263" target="_blank" rel="noopener"><svg class="ic"><use href="#i-git"/></svg><b>GitHub</b><span>pavanofficial1263</span></a>
+        </div>
+      </div>
+      <div class="cube-wrap">
+        <div>
+          <div class="cube-stage" id="cubeStage" aria-hidden="true">
+            <div class="cube" id="cube">
+              <div class="face f1"><svg class="ic"><use href="#i-mail"/></svg>Mail</div>
+              <div class="face f2"><svg class="ic"><use href="#i-phone"/></svg>Call</div>
+              <div class="face f3"><svg class="ic"><use href="#i-in"/></svg>LinkedIn</div>
+              <div class="face f4"><svg class="ic"><use href="#i-git"/></svg>GitHub</div>
+              <div class="face f5"><svg class="ic"><use href="#i-shield"/></svg>Game QA</div>
+              <div class="face f6"><svg class="ic"><use href="#i-game"/></svg>Unity</div>
+            </div>
+          </div>
+          <p class="cube-hint" aria-hidden="true">Drag the cube to spin</p>
+        </div>
+      </div>
+    </div></div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="yr">2026</span> M Pavan Raj · Bengaluru, India</span>
+    <a href="#top"><svg class="ic" style="vertical-align:-3px"><use href="#i-up"/></svg> Back to top</a>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"><svg class="ic"><use href="#i-check"/></svg><span id="toastMsg">Email copied</span></div>
+
+<script>
+(function(){
+'use strict';
+var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+var fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+var $ = function(s,c){return (c||document).querySelector(s)};
+var $$ = function(s,c){return Array.prototype.slice.call((c||document).querySelectorAll(s))};
+
+/* year */
+$('#yr').textContent = new Date().getFullYear();
+
+/* nav state + progress + active link */
+var nav=$('#nav'), prog=$('#progress');
+function onScroll(){
+  var y=window.scrollY, h=document.documentElement.scrollHeight-window.innerHeight;
+  nav.classList.toggle('solid',y>20);
+  prog.style.transform='scaleX('+(h>0?Math.min(1,y/h):0)+')';
+}
+window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
+var links=$$('.links a'), secs=['about','skills','projects','experience','contact'].map(function(id){return document.getElementById(id)});
+if('IntersectionObserver' in window){
+  var so=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){links.forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id)})}})},{rootMargin:'-45% 0px -50% 0px'});
+  secs.forEach(function(s){so.observe(s)});
+}
+
+/* mobile staggered menu */
+var burger=$('#burger'), mnav=$('#mnav');
+function setMenu(open){
+  document.body.classList.toggle('menu-open',open);
+  burger.setAttribute('aria-expanded',open);
+  burger.setAttribute('aria-label',open?'Close menu':'Open menu');
+  mnav.setAttribute('aria-hidden',!open);
+  mnav.classList.toggle('x',open);
+}
+burger.addEventListener('click',function(){setMenu(!document.body.classList.contains('menu-open'))});
+$$('a',mnav).forEach(function(a){a.addEventListener('click',function(){setMenu(false)})});
+window.addEventListener('keydown',function(e){if(e.key==='Escape')setMenu(false)});
+window.addEventListener('resize',function(){if(window.innerWidth>900)setMenu(false)});
+
+/* typewriter roles */
+(function(){
+  var el=$('#role'); if(!el||reduce) return;
+  var roles=['Problem Solver','Game QA Tester','Unity Developer','Game Designer','Web Developer'], r=0,i=roles[0].length,del=true;
+  function tick(){
+    var w=roles[r], d=90;
+    if(del){ i--; d=38; if(i<=0){del=false;r=(r+1)%roles.length;i=0;d=380;} }
+    else{ i++; d=85; if(i>=roles[r].length){del=true;d=1900;} }
+    el.textContent=roles[r].slice(0,i)||'\u00a0';
+    setTimeout(tick,d);
+  }
+  setTimeout(tick,2200);
+})();
+
+/* scroll reveal */
+(function(){
+  var items=$$('.reveal');
+  if(!('IntersectionObserver' in window)||reduce){items.forEach(function(n){n.classList.add('vis')});return}
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('vis');io.unobserve(e.target)}})},{threshold:.1,rootMargin:'0px 0px -6% 0px'});
+  items.forEach(function(n){io.observe(n)});
+})();
+
+/* 3D tilt cards */
+if(fine&&!reduce){
+  $$('[data-tilt]').forEach(function(el){
+    var max=parseFloat(el.dataset.tilt)||8;
+    el.addEventListener('pointermove',function(e){
+      var r=el.getBoundingClientRect(), px=(e.clientX-r.left)/r.width, py=(e.clientY-r.top)/r.height;
+      el.style.setProperty('--ry',((px-.5)*2*max).toFixed(2)+'deg');
+      el.style.setProperty('--rx',((.5-py)*2*max).toFixed(2)+'deg');
+      el.style.setProperty('--tx',((px-.5)*2).toFixed(3));
+      el.style.setProperty('--ty',((py-.5)*2).toFixed(3));
+      el.classList.add('tilting');
+    });
+    el.addEventListener('pointerleave',function(){
+      el.classList.remove('tilting');
+      ['--rx','--ry','--tx','--ty'].forEach(function(p){el.style.removeProperty(p)});
+    });
+  });
+}
+
+/* holo-model fallback to original model */
+(function(){
+  var img=$('#holoImg'); if(!img) return;
+  function fb(){ if(img.dataset.fb) return; img.dataset.fb='1'; img.classList.add('orig'); img.src=img.dataset.fallback; }
+  img.addEventListener('error',fb);
+  if(img.complete&&img.naturalWidth===0&&img.getAttribute('src')) fb();
+})();
+
+/* copy email + toast */
+(function(){
+  var btn=$('#copyMail'), toast=$('#toast'), msg=$('#toastMsg'), t;
+  function show(m){msg.textContent=m;toast.classList.add('show');clearTimeout(t);t=setTimeout(function(){toast.classList.remove('show')},2400)}
+  function legacy(txt){var a=document.createElement('textarea');a.value=txt;a.setAttribute('readonly','');a.style.cssText='position:fixed;opacity:0;top:0';document.body.appendChild(a);a.select();var ok=false;try{ok=document.execCommand('copy')}catch(e){}document.body.removeChild(a);return ok}
+  btn.addEventListener('click',function(){
+    var txt=btn.dataset.email;
+    if(navigator.clipboard&&window.isSecureContext){
+      navigator.clipboard.writeText(txt).then(function(){show('Email copied to clipboard')},function(){show(legacy(txt)?'Email copied to clipboard':'Copy failed — '+txt)});
+    }else{show(legacy(txt)?'Email copied to clipboard':'Copy failed — '+txt)}
+  });
+})();
+
+/* draggable 3D contact cube */
+(function(){
+  var stage=$('#cubeStage'), cube=$('#cube'); if(!stage) return;
+  var rx=-22, ry=30, vx=0, vy=reduce?0:.35, drag=false, lx=0, ly=0, vis=true, raf;
+  function paint(){cube.style.transform='rotateX('+rx+'deg) rotateY('+ry+'deg)'}
+  function loop(){
+    if(!drag){ ry+=vy; rx+=vx; vx*=.94; vy+= ((reduce?0:.35)-vy)*.02; }
+    paint();
+    if(vis&&!reduce) raf=requestAnimationFrame(loop);
+  }
+  stage.addEventListener('pointerdown',function(e){drag=true;lx=e.clientX;ly=e.clientY;stage.setPointerCapture(e.pointerId)});
+  stage.addEventListener('pointermove',function(e){
+    if(!drag) return;
+    var dx=e.clientX-lx, dy=e.clientY-ly; lx=e.clientX; ly=e.clientY;
+    ry+=dx*.6; rx-=dy*.6; vy=dx*.6; vx=-dy*.6; if(reduce) paint();
+  });
+  function up(){drag=false}
+  stage.addEventListener('pointerup',up); stage.addEventListener('pointercancel',up);
+  paint();
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(es){var v=es[0].isIntersecting; if(v&&!vis&&!reduce){vis=true;raf=requestAnimationFrame(loop)} vis=v}).observe(stage);
+  }
+  if(!reduce) raf=requestAnimationFrame(loop);
+})();
+
+/* ================= THREE.JS BACKGROUND ================= */
+(function(){
+  var canvas=$('#bg');
+  function webglOK(){try{var c=document.createElement('canvas');return !!(window.WebGLRenderingContext&&(c.getContext('webgl')||c.getContext('experimental-webgl')))}catch(e){return false}}
+  function load(src){return new Promise(function(res,rej){var s=document.createElement('script');s.src=src;s.onload=res;s.onerror=rej;document.head.appendChild(s)})}
+  if(reduce||!webglOK()) return;                       // graceful CSS fallback stays visible
+  var srcs=['https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js','https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js'];
+  load(srcs[0]).catch(function(){return load(srcs[1])}).then(function(){
+    if(!window.THREE) return;
+    try{ init(window.THREE); document.documentElement.classList.add('gl-on'); }
+    catch(err){ console.warn('3D background disabled:',err); }
+  }).catch(function(){ /* offline → CSS fallback */ });
+
+  function init(THREE){
+    var renderer=new THREE.WebGLRenderer({canvas:canvas,alpha:true,antialias:true,powerPreference:'high-performance'});
+    renderer.setClearColor(0x000000,0);
+    var scene=new THREE.Scene();
+    scene.fog=new THREE.Fog(0x04050d,13,44);
+    var CAM_Z=10, camera=new THREE.PerspectiveCamera(60,1,.1,120);
+    camera.position.z=CAM_Z;
+    var C={cyan:new THREE.Color(0x00e5ff),fuc:new THREE.Color(0xff46d4),vio:new THREE.Color(0x8b5cff)};
+    var small=window.innerWidth<700;
+
+    /* neon floor grid that stays pinned to the bottom of the viewport */
+    var floor=new THREE.Group(), STEP=2.4, SIZE=72;
+    (function(){
+      var vp=[],vc=[],hp=[],hc=[],n=Math.floor(SIZE/STEP),i,col;
+      for(i=-n;i<=n;i++){col=(i%4===0)?C.cyan:C.vio;vp.push(i*STEP,0,-SIZE,i*STEP,0,12);vc.push(col.r,col.g,col.b,col.r,col.g,col.b)}
+      for(i=0;i<=Math.floor((SIZE+12+STEP)/STEP);i++){var z=-SIZE+i*STEP;col=(i%4===0)?C.fuc:C.vio;hp.push(-SIZE,0,z,SIZE,0,z);hc.push(col.r,col.g,col.b,col.r,col.g,col.b)}
+      function mk(p,c,o){var g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(p,3));g.setAttribute('color',new THREE.Float32BufferAttribute(c,3));return new THREE.LineSegments(g,new THREE.LineBasicMaterial({vertexColors:true,transparent:true,opacity:o}))}
+      floor.add(mk(vp,vc,.42));
+      floor.userData.h=mk(hp,hc,.5); floor.add(floor.userData.h);
+    })();
+    scene.add(floor);
+
+    /* drifting particles */
+    var N=small?320:900, pos=new Float32Array(N*3), col=new Float32Array(N*3), spd=new Float32Array(N), ph=new Float32Array(N);
+    var palette=[C.cyan,C.fuc,C.vio,new THREE.Color(0xffffff)];
+    for(var p=0;p<N;p++){
+      pos[p*3]=(Math.random()-.5)*56; pos[p*3+1]=(Math.random()-.5)*26; pos[p*3+2]=-22+Math.random()*26;
+      var c=palette[(Math.random()*palette.length)|0]; col[p*3]=c.r;col[p*3+1]=c.g;col[p*3+2]=c.b;
+      spd[p]=.15+Math.random()*.55; ph[p]=Math.random()*6.28;
+    }
+    var pg=new THREE.BufferGeometry(); pg.setAttribute('position',new THREE.BufferAttribute(pos,3)); pg.setAttribute('color',new THREE.BufferAttribute(col,3));
+    var sc=document.createElement('canvas'); sc.width=sc.height=64; var sx=sc.getContext('2d'), gr=sx.createRadialGradient(32,32,0,32,32,32);
+    gr.addColorStop(0,'rgba(255,255,255,1)'); gr.addColorStop(.25,'rgba(255,255,255,.85)'); gr.addColorStop(1,'rgba(255,255,255,0)'); sx.fillStyle=gr; sx.fillRect(0,0,64,64);
+    var pts=new THREE.Points(pg,new THREE.PointsMaterial({size:.14,map:new THREE.CanvasTexture(sc),vertexColors:true,transparent:true,opacity:.9,depthWrite:false,blending:THREE.AdditiveBlending}));
+    scene.add(pts);
+
+    /* rotating wireframe objects anchored to page sections */
+    var GEO={
+      ico:function(){return new THREE.IcosahedronGeometry(1,0)},
+      octa:function(){return new THREE.OctahedronGeometry(1,0)},
+      dodeca:function(){return new THREE.DodecahedronGeometry(1,0)},
+      tetra:function(){return new THREE.TetrahedronGeometry(1,0)},
+      knot:function(){return new THREE.TorusKnotGeometry(.7,.22,90,10,2,3)},
+      torus:function(){return new THREE.TorusGeometry(1,.32,10,28)}
+    };
+    var DEF=[
+      ['hero','ico','cyan',.36,.40,0,88,.22],['hero','octa','vio',.53,.80,-1,58,.3],['hero','torus','fuc',.60,.15,-2,64,.2],
+      ['about','knot','fuc',.55,.52,-1,86,.25],['about','ico','cyan',.30,.20,0,72,.2],['about','octa','vio',.50,.78,0,52,.3],
+      ['skills','dodeca','cyan',.93,.20,-1,72,.22],['skills','tetra','fuc',.05,.60,0,56,.3],['skills','octa','vio',.92,.86,-1,50,.25],
+      ['projects','ico','cyan',.05,.10,-1,68,.2],['projects','knot','vio',.95,.38,-1,76,.22],['projects','dodeca','fuc',.04,.66,-1,60,.25],['projects','octa','cyan',.95,.92,-1,54,.3],
+      ['experience','ico','vio',.92,.30,-1,70,.2],['experience','tetra','cyan',.06,.78,-1,56,.28],
+      ['contact','torus','cyan',.80,.50,-4,130,.16]
+    ];
+    var objs=[], anchors={};
+    ['hero','about','skills','projects','experience','contact'].forEach(function(id){anchors[id]=document.getElementById(id)});
+    DEF.forEach(function(d,i){
+      if(small&&i%2) return;
+      var g=GEO[d[1]](), isPoly=(d[1]!=='knot'&&d[1]!=='torus');
+      var geo=isPoly?new THREE.EdgesGeometry(g):new THREE.WireframeGeometry(g);
+      var color=C[d[2]];
+      var grp=new THREE.Group();
+      grp.add(new THREE.LineSegments(geo,new THREE.LineBasicMaterial({color:color,transparent:true,opacity:.9})));
+      if(isPoly){ grp.add(new THREE.Points(g,new THREE.PointsMaterial({color:color,size:.11,map:pts.material.map,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending}))); }
+      grp.rotation.set(Math.random()*3,Math.random()*3,Math.random()*3);
+      scene.add(grp);
+      objs.push({m:grp,a:d[0],fx:d[3],fy:d[4],z:d[5],px:d[6],spin:d[7],ph:Math.random()*6.28,base:new THREE.Vector3()});
+    });
+
+    var W=1,H=1,upp=.01;
+    function layout(){
+      W=window.innerWidth;H=window.innerHeight;
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.75));
+      renderer.setSize(W,H);
+      camera.aspect=W/H;camera.updateProjectionMatrix();
+      upp=2*CAM_Z*Math.tan(THREE.MathUtils.degToRad(camera.fov/2))/H;
+      var k=W<700?.62:(W<1000?.8:1), sy=window.scrollY;
+      objs.forEach(function(o){
+        var el=anchors[o.a]; if(!el) return;
+        var top=el.getBoundingClientRect().top+sy, y=top+o.fy*el.offsetHeight;
+        var fx=W<900?Math.min(.9,Math.max(.1,o.fx)):o.fx;
+        o.base.set((fx-.5)*W*upp,-y*upp,o.z);
+        o.m.scale.setScalar(o.px*upp*k);
+      });
+    }
+    layout();
+    var rt; function relayout(){clearTimeout(rt);rt=setTimeout(layout,120)}
+    window.addEventListener('resize',relayout);
+    window.addEventListener('load',relayout);
+    if('ResizeObserver' in window) new ResizeObserver(relayout).observe(document.body);
+
+    var mx=0,my=0,cx=0,cy=0,lastY=window.scrollY,vel=0,prev=performance.now();
+    window.addEventListener('pointermove',function(e){mx=(e.clientX/W-.5)*2;my=(e.clientY/H-.5)*2},{passive:true});
+    var FLOOR_DROP=4.7;
+
+    function frame(now){
+      requestAnimationFrame(frame);
+      var dt=Math.min(.05,(now-prev)/1000); prev=now; var t=now*.001;
+      var sy=window.scrollY, dy=sy-lastY; lastY=sy;
+      vel+=(Math.max(-2,Math.min(2,dy*.012))-vel)*.08;
+      cx+=(mx-cx)*.05; cy+=(my-cy)*.05;
+
+      camera.position.x=cx*.9;
+      camera.position.y=-(sy+H/2)*upp-cy*.5;
+      camera.rotation.y=-cx*.035; camera.rotation.x=-cy*.02;
+
+      floor.position.set(0,camera.position.y-FLOOR_DROP,0);
+      floor.userData.h.position.z=(t*1.4)%STEP;
+
+      pts.position.y=camera.position.y*.86;
+      var a=pg.attributes.position.array;
+      for(var i=0;i<N;i++){
+        var j=i*3+1; a[j]+=spd[i]*dt*(1+Math.abs(vel)*2.2);
+        if(a[j]>13) a[j]=-13;
+        a[i*3]+=Math.sin(t*.4+ph[i])*.0025;
+      }
+      pg.attributes.position.needsUpdate=true;
+
+      for(var k=0;k<objs.length;k++){
+        var o=objs[k];
+        o.m.position.set(o.base.x,o.base.y+Math.sin(t*.7+o.ph)*.22,o.base.z);
+        o.m.rotation.x+=o.spin*dt*.8+vel*.02;
+        o.m.rotation.y+=o.spin*dt+vel*.03;
+      }
+      renderer.render(scene,camera);
+    }
+    requestAnimationFrame(frame);
+  }
+})();
+
+})();
+</script>
+</body>
+</html>
